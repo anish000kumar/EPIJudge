@@ -3178,6 +3178,7 @@ input.mdl-button[type="submit"] {
     justify-content: stretch;
     line-height: normal;
     padding: 16px;
+    padding-left: 0;
     -webkit-perspective-origin: 165px 56px;
     perspective-origin: 165px 56px;
     -webkit-transform-origin: 165px 56px;
@@ -3219,8 +3220,7 @@ input.mdl-button[type="submit"] {
     font-size: 13px;
     line-height: 18px;
     overflow: hidden;
-    padding: 16px;
-    width: 90%
+    width: 100%
 }
 
 .mdl-card__actions {

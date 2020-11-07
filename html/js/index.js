@@ -5,7 +5,7 @@
 // [ ] links
 const EPI_DATA = translateProblemMappings(problem_mapping);
 
-const ALL_LANGUAGES = ['cpp', 'java', 'python'];
+const ALL_LANGUAGES = ['python', 'cpp', 'java'];
 
 Vue.component('donut', {
     props: ['x', 'size', 'width', 'rad', 'lineWidth', 'font'],
@@ -32,8 +32,13 @@ Vue.component('donut', {
 
 Vue.component('chapter-donut', {
     props: ['x'],
-    template: `<donut :x=x size=80 width=100 rad=35 lineWidth=7 font='13px Roboto'> </donut>`
+    template: `<div class="chapter-bar"> <div :style="{width: x*100+'%'}" class="chapter-inner-bar"></div> </div>`
 })
+
+// Vue.component('chapter-donut', {
+//     props: ['x'],
+//     template: `<donut :x=x size=80 width=100 rad=35 lineWidth=7 font='13px Roboto'> </donut>`
+// })
 
 Vue.component('problem-donut', {
     props: ['x'],
@@ -44,7 +49,7 @@ Vue.component('problem-plot', {
     props: ['data', 'extended', 'lang'],
     template: `
       <div class="problem-plot">
-        <problem-donut align=center :x=(data.passed/data.total)>
+       <problem-donut align=center :x=(data.passed/data.total)>
         </problem-donut>
         <p> {{data.passed}}/{{data.total}} </p>
         <transition name="fade"> 
@@ -64,7 +69,6 @@ Vue.component('chapter-plot', {
         <chapter-donut 
           :x=(data[lang]/data.total)>
         </chapter-donut>
-        <p v-if=extended> {{$root.langs_displayname[lang]}} </p>
       </div>
       `
 })
@@ -109,21 +113,17 @@ Vue.component('chapter-card', {
     },
     computed: {
         'opened': function () {
-            return this.$root.selected_chapter === this.chapter.name;
+            return this.$root.selected_chapter && this.$root.selected_chapter.name === this.chapter.name;
         }
     },
     methods: {
         toggle: function () {
-            if (this.opened) {
-                this.$root.selected_chapter = null;
-            } else {
-                this.$root.selected_chapter = this.chapter.name;
-            }
+                this.$root.selected_chapter = this.chapter;
         }
     },
     template: `
         <div>
-          <div class="chapter-card-wide mdl-card mdl-shadow--2dp">
+          <div class="chapter-card-wide mdl-card mdl-shadow--2dp" :class="{'selected-chapter': opened}" v-on:click="toggle">
             <div class="mdl-card__title">
               <h2 class="mdl-card__title-text">{{chapter.name}}</h2>
             </div>
@@ -132,19 +132,8 @@ Vue.component('chapter-card', {
                       :lang=l :data=chapter.progress :extended=true>
               </chapter-plot>
             </div>
-            <div class="mdl-card__actions mdl-card--border">
-              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" 
-                 style="background: #eaeaea; color: #004c8c" v-on:click="toggle">
-                Problems
-              </a>
-            </div>
           </div>
-          <transition name="expand">
-            <div class="problem-card-block" v-if="opened">
-              <problem-card v-for="p in chapter.problems" 
-                           :problem="p" :key="p.name"></problem-card>
-            </div>
-          </transition>
+          
         </div>
     `
 })
@@ -195,14 +184,20 @@ const epi = new Vue({
             chapters: EPI_DATA,
             selected_chapter: null,
             all_langs: ALL_LANGUAGES,
-            langs_enabled: {"cpp": true, "java": true, "python": true},
+            langs_enabled: {"cpp": false, "java": false, "python": true},
             langs_displayname: {"cpp": "C++", "java": "Java", "python": "Python"}
         }
     },
     computed: {
         langs: function () {
-            // return this.all_langs.filter(e => this.langs_enabled[e]);
-            return this.all_langs;
+            return this.all_langs.filter(e => this.langs_enabled[e]);
+        }
+    },
+    methods: {
+        onLangSelect(e){
+            const selected_lang = e.target.value;
+            this.langs_enabled[this.langs[0]]=false;
+            this.langs_enabled[selected_lang] = true;
         }
     },
     mounted: function () {

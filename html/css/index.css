@@ -39,10 +39,15 @@
 }
 
 .chapter-card-wide.mdl-card {
-    width: 612px;
-    margin: 20px auto auto;
+    width: 600px;
+    min-height: unset!important;
+    padding-bottom: 15px;
+    cursor: pointer;
+    margin: 10px;
     padding-left: 10px;
     padding-right: 10px;
+    display: flex;
+    box-shadow: none;
 }
 
 .chapter-card-wide > .mdl-card__title {
@@ -56,12 +61,13 @@
 }
 
 .problem-card-wide.mdl-card {
-    width: 592px;
-    margin: 5px auto auto;
+    width: 700px;
+    margin: 2px auto auto;
     position: relative;
     left: 10px;
-    min-height: 95px;
+    min-height: 0px;
     padding-left: 10px;
+    box-shadow: none;
 }
 
 .centered {
@@ -79,10 +85,11 @@
     background-color: #efefef;
     font-family: "Roboto Light", sans-serif;
     padding-bottom: 40px;
+    display: flex;
 }
 
 .chapter-plot {
-    margin: 0 4px;
+    width: 100%;
     display: inline-block;
 }
 
@@ -92,7 +99,6 @@
 }
 
 .problem-plot {
-    .chapter-plot;
     margin: 0 3px;
 }
 
@@ -101,4 +107,47 @@
     font-size: 11px;
     line-height: 14px;
     margin: 0;
+}
+
+.chapter-bar {
+    height: 10px;
+    background: #eee;
+    position: relative;
+    overflow: hidden;
+}
+
+.chapter-inner-bar{
+    position: absolute;
+    height: 100%;
+    left: 0;
+    background: rgb(105, 150, 247);
+}
+
+.mdl-card__title-text {
+    font-size: 18px;
+    padding: 10px;
+    padding-left: 0;
+    height: 18px;
+}
+
+.mdl-card__title {
+    padding: 0;
+    height: 40px !important;
+}
+
+.selected-chapter {
+    background: rgb(50, 50, 85);
+}
+.selected-chapter h2 {
+    color: #eee;
+}
+
+.chapter-details {
+    padding: 10px;
+    padding-bottom: 100px;
+}
+.scroller {
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-right: 20px;
 }

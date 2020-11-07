@@ -24,11 +24,24 @@
                     <a class="mdl-navigation__link" style="font-size: x-large" href="https://elementsofprogramminginterviews.com/">Website</a>
                     <a class="mdl-navigation__link" style="font-size: x-large" href="https://github.com/adnanaziz/EPIJudge">GitHub</a>
                 </nav>
+                <div>
+                    <select name="language" :selected="langs[0]" @change="onLangSelect">
+                        <option v-for="lang in all_langs" :key="lang" :value="lang" > {{ langs_displayname[lang] }} </option>
+                      </select>
+                </div>
             </div>
         </header>
         <main class="epi_content mdl-layout__content">
             <div class="chapter-card-block">
-                <chapter-card v-for="chapter in chapters" v-bind:chapter="chapter"></chapter-card>
+                <div class="scroller">
+                    <chapter-card v-for="chapter in chapters" v-bind:chapter="chapter"></chapter-card>
+                </div>
+            </div>
+            <div class="chapter-details" v-if="selected_chapter">
+                  <div class="scroller">
+                    <problem-card v-for="p in selected_chapter.problems" 
+                    :problem="p" :key="p.name"></problem-card>
+                  </div>
             </div>
         </main>
     </div>
