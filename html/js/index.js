@@ -55,10 +55,8 @@ Vue.component('problem-plot', {
     props: ['data', 'extended', 'lang'],
     template: `
       <div class="problem-plot">
-        <a :href="data.filename">
-            <problem-donut align=center :x=(data.passed/data.total)>
-            </problem-donut>
-        </a>
+        <problem-donut align=center :x=(data.passed/data.total)>
+        </problem-donut>
         <p> {{data.passed}}/{{data.total}} </p>
       </div>
       `
@@ -85,6 +83,7 @@ Vue.component('problem-card', {
     data() {
         return {
             hover: false,
+            workspace_path: window.workspace_path
         };
     },
     methods: {
@@ -97,6 +96,7 @@ Vue.component('problem-card', {
         }
     },
     template: `
+        <a class="simple-link" :href="'vscode://file/'+workspace_path+'/'+problem[this.$root.langs[0]].filename.split('/')[1]">
           <div class="problem-card-wide mdl-card mdl-shadow--2dp" @mouseover="hover = true" @mouseleave="hover = false">
             <div class="problem-card-content mdl-card__supporting-text">
               <span class="problem-name">{{problem.name}}</span>
@@ -105,6 +105,7 @@ Vue.component('problem-card', {
               </problem-plot>
             </div>
           </div>
+          </a>
       `
 });
 

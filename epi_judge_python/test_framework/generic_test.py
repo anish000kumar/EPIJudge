@@ -135,6 +135,7 @@ def run_tests(handler, config, res_printer):
 def update_test_passed(test_file, tests_passed):
     problem_mapping_file_path = get_file_path_in_judge_dir(
         'problem_mapping.js')
+    folder_path_statement = "workspace_path = '"+ os.path.abspath(os.getcwd()) + "' ;\n";
     js_begin_pattern, js_end_pattern = 'problem_mapping = ', ';'
     with open(problem_mapping_file_path) as problem_mapping_file:
         chapter_to_problem_to_language_solution_mapping = json.loads(
@@ -148,9 +149,11 @@ def update_test_passed(test_file, tests_passed):
                 language_solution_mapping[test_file]['passed'] = tests_passed
                 with open(problem_mapping_file_path,
                           'w') as problem_mapping_file:
+                    problem_mapping_file.write(folder_path_statement)
                     problem_mapping_file.write(js_begin_pattern)
                     json.dump(chapter_to_problem_to_language_solution_mapping,
                               problem_mapping_file,
                               indent=4)
                     problem_mapping_file.write(js_end_pattern)
                 return
+

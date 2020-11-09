@@ -175,3 +175,8 @@
  display: block;
  height: 50px;
 }
+
+
+.simple-link {
+    text-decoration: none;
+}

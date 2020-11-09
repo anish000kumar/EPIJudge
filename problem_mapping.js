@@ -1,3 +1,4 @@
+workspace_path = '/Users/akmarhw/Documents/EPIJudge/epi_judge_python' ;
 problem_mapping = {
     "Chapter 04: Primitive Types": {
         "4.00 Bootcamp: Primitive Types": {
@@ -1010,7 +1011,7 @@ problem_mapping = {
                 "total": 3852
             },
             "Python: is_tree_balanced.py": {
-                "passed": 0,
+                "passed": 3852,
                 "total": 3852
             }
         },
