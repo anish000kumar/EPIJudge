@@ -5,6 +5,7 @@
 // [ ] links
 const EPI_DATA = translateProblemMappings(problem_mapping);
 
+
 const ALL_LANGUAGES = ['python', 'cpp', 'java'];
 
 Vue.component('donut', {
@@ -40,24 +41,25 @@ Vue.component('chapter-donut', {
 //     template: `<donut :x=x size=80 width=100 rad=35 lineWidth=7 font='13px Roboto'> </donut>`
 // })
 
-Vue.component('problem-donut', {
+Vue.component('score-donut', {
     props: ['x'],
     template: `<donut :x=x size=36 width=70 rad=14 lineWidth=4></donut>`
+})
+
+Vue.component('problem-donut', {
+    props: ['x'],
+    template: `<div class="problem-bar"> <div :style="{width: x*100+'%'}" class="chapter-inner-bar"></div> </div>`
 })
 
 Vue.component('problem-plot', {
     props: ['data', 'extended', 'lang'],
     template: `
       <div class="problem-plot">
-       <problem-donut align=center :x=(data.passed/data.total)>
-        </problem-donut>
+        <a :href="data.filename">
+            <problem-donut align=center :x=(data.passed/data.total)>
+            </problem-donut>
+        </a>
         <p> {{data.passed}}/{{data.total}} </p>
-        <transition name="fade"> 
-            <p v-if="extended"><a :href=data.filename style="color: #004c8c">source</a></p>
-        </transition>
-        <transition name="fade"> 
-        <p v-if="!extended" style="visibility: hidden;"><a :href=data.filename>source</a></p>
-        </transition>
       </div>
       `
 })
@@ -191,6 +193,24 @@ const epi = new Vue({
     computed: {
         langs: function () {
             return this.all_langs.filter(e => this.langs_enabled[e]);
+        },
+        progress() {
+            const result = {
+                total: 0,
+                progress: {}
+            }
+            this.chapters.forEach(chapter => {
+                result.total += chapter.problems.length;
+                Object.entries(chapter.progress).forEach(([language, solved]) => {
+                    if(result.progress[language]){
+                        result.progress[language] += solved
+                    }
+                    else {
+                        result.progress[language] = solved
+                    }
+                })
+            })
+            return { total: result.total, solved: result.progress[this.langs[0]]}
         }
     },
     methods: {

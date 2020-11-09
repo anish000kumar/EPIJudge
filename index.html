@@ -18,11 +18,11 @@
         <header class="mdl-layout__header" style="background-color: #002f6c">
             <div class="mdl-layout__header-row">
                 <!-- Title -->
-                <span class="mdl-layout-title" style="font-size: xx-large">EPIJudge</span>
+                <span class="mdl-layout-title" style="font-size: xx-large; margin-left: -70px;">EPIJudge</span>
                 <div class="mdl-layout-spacer"></div>
                 <nav class="mdl-navigation mdl-layout--large-screen-only">
-                    <a class="mdl-navigation__link" style="font-size: x-large" href="https://elementsofprogramminginterviews.com/">Website</a>
-                    <a class="mdl-navigation__link" style="font-size: x-large" href="https://github.com/adnanaziz/EPIJudge">GitHub</a>
+                        <h3>{{progress.solved}}/{{progress.total}}</h3>
+                        <score-donut :x="progress.solved/progress.total" />
                 </nav>
                 <!-- <div>
                     <select name="language" :selected="langs[0]" @change="onLangSelect">
@@ -33,15 +33,15 @@
         </header>
         <main class="epi_content mdl-layout__content">
             <div class="chapter-card-block">
-                <div class="scroller">
+                <div class="fixed-scroller">
                     <chapter-card v-for="chapter in chapters" v-bind:chapter="chapter"></chapter-card>
+                    <div class="spacer"></div>
                 </div>
             </div>
             <div class="chapter-details" v-if="selected_chapter">
-                  <div class="scroller">
                     <problem-card v-for="p in selected_chapter.problems" 
                     :problem="p" :key="p.name"></problem-card>
-                  </div>
+                    <div class="spacer"></div>
             </div>
         </main>
     </div>
