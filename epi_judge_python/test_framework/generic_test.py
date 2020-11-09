@@ -153,7 +153,6 @@ def update_test_passed(test_file, tests_passed):
                 language_solution_mapping[test_file]['passed'] = tests_passed
                 with open(problem_mapping_file_path,
                           'w') as problem_mapping_file:
-                    problem_mapping_file.write(folder_path_statement)
                     problem_mapping_file.write(js_begin_pattern)
                     json.dump(chapter_to_problem_to_language_solution_mapping,
                               problem_mapping_file,
